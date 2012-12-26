@@ -1,7 +1,10 @@
 ios-receipt-verifier
 ====================
 
-Simple Twisted server to verify iOS receipts from in-app-purchases
+Simple Twisted server to verify iOS receipts from in-app-purchases   
+For More info please read 
+[Apple's Docs]
+[http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/VerifyingStoreReceipts/VerifyingStoreReceipts.html]
 
 Local Setup
 -----------

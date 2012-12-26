@@ -22,7 +22,7 @@ def main():
     # Try to get the PORT set by Heroku, or failback to port 8080
     port = int(os.environ.get('PORT', 8080))
     root = Resource()
-    root.putChild('/', FormPage())
+    root.putChild('', FormPage())
     factory = Site(root)
     reactor.listenTCP(port, factory)
     reactor.run()
