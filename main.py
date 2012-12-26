@@ -3,6 +3,7 @@ Manages the
 
 twistd -y server.py -l protobuf.log
 """
+import os
 
 from twisted.web.server import Site
 from twisted.web.resource import Resource
@@ -18,7 +19,7 @@ class FormPage(Resource):
         return '<html><body>You submitted: %s</body></html>' % (cgi.escape(request.args["the-field"][0]),)
 
 def main():
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 8880))
     root = Resource()
     root.putChild('cassandra', FormPage())
     factory = Site(root)
