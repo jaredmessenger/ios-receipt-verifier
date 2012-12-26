@@ -1,7 +1,7 @@
 """
 Manages the 
 
-
+twistd -y server.py -l protobuf.log
 """
 
 from twisted.web.server import Site
@@ -18,10 +18,11 @@ class FormPage(Resource):
         return '<html><body>You submitted: %s</body></html>' % (cgi.escape(request.args["the-field"][0]),)
 
 def main():
+    port = int(os.environ.get('PORT', 5000))
     root = Resource()
     root.putChild('cassandra', FormPage())
     factory = Site(root)
-    reactor.listenTCP(8880, factory)
+    reactor.listenTCP(port, factory)
     reactor.run()
     
 if __name__ == '__main__':
