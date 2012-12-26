@@ -11,4 +11,5 @@ source venv/bin/activate
 pip install -U twisted
 
 heroku create --remote server --addons heroku-postgresql:dev ios-receipt-verification
+heroku ps:scale web=1
 ```

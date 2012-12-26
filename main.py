@@ -19,9 +19,10 @@ class FormPage(Resource):
         return '<html><body>You submitted: %s</body></html>' % (cgi.escape(request.args["the-field"][0]),)
 
 def main():
-    port = int(os.environ.get('PORT', 8880))
+    # Try to get the PORT set by Heroku, or failback to port 8080
+    port = int(os.environ.get('PORT', 8080))
     root = Resource()
-    root.putChild('cassandra', FormPage())
+    root.putChild('/', FormPage())
     factory = Site(root)
     reactor.listenTCP(port, factory)
     reactor.run()
