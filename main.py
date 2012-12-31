@@ -15,7 +15,7 @@ import cgi
 import urllib2
 
 class BaseHandler(Resource):
-    def validate_apple_respose(self, request, receipt_info):
+    def validate_apple_respose(self, receipt_info, request):
         """
         Apple will return a json 
         """
