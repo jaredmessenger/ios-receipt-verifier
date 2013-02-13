@@ -10,12 +10,7 @@ from tornado import httpclient
 #redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
 #redis = redis.from_url(redis_url)
 
-logging.basicConfig( 
-    stream=sys.stdout, 
-    level=logging.DEBUG, 
-    format='"%(asctime)s %(levelname)8s %(name)s - %(message)s"', 
-    datefmt='%H:%M:%S' 
-) 
+log = logging.getLogger('tornado.general')
 
 class MainHandler(RequestHandler):
     @asynchronous
@@ -23,6 +18,7 @@ class MainHandler(RequestHandler):
         """
         Get the json data and send it to apple to be verified
         """
+        log.info(game_name)
         content = json.loads(self.request.body)
         header  = {'Content-Type' : 'application/json'}
         request = httpclient.HTTPRequest('https://sandbox.itunes.apple.com/verifyReceipt',
@@ -41,13 +37,19 @@ class MainHandler(RequestHandler):
         """
         receipt_data = json.loads(response.body)
         validation = dict()
-        logging.info(response.body)
+        log.info(response.body)
         validation['valid_receipt'] = True
         if receipt_data['status'] != 0:
+            self.set_status(403)
             validation['valid_receipt'] = False
             
         self.write(json.dumps(validation))
         self.finish()
+        
+    def get(self, game_name):
+        logging.info('Get game Name %s' %game_name)
+        self.write('here')
+        
         
         
 
