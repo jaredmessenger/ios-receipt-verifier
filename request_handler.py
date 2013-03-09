@@ -40,10 +40,14 @@ class MainHandler(RequestHandler):
             
         else:
             # try to add the receipt to the DB
-            if redis_pool.sadd('%s:%s' %(receipt_data['bid'], receipt_data['transaction_id']), receipt_data['product_id']) :
-                # To keep the Redis light and fast, expire the transaction after 15 days
-                redis_pool.expire('%s:%s' %(receipt_data['bid'], receipt_data['transaction_id']), 1296000)
+            if redis_pool.sadd(receipt_data['bid'], receipt_data['transaction_id']) :
+                # To keep the Redis light and fast, expire the com.game
+                # transactions after 5 days of inactivity
+                redis_pool.expire(receipt_data['bid'], 432000)
+                
+                # Increment the product for statistics
                 redis_pool.zincrby(game_name, receipt_data['product_id'], 1)
+                
                 self.set_status(200)
             else:
                 self.set_status(403)
