@@ -17,10 +17,7 @@ class MainHandler(RequestHandler):
     def post(self, game_name):
         """
         Get the json data and send it to apple to be verified
-        """
-        log.info(game_name)
-        log.info(self.request.body)
-        
+        """       
         content = json.loads(self.request.body)
         
         header  = {'Content-Type' : 'application/json'}
