@@ -38,19 +38,22 @@ class MainHandler(RequestHandler):
         
         Reads the json data returned, stores the transaction id so it can't be used again
         """
-        receipt_data = json.loads(response.body)
         log.info("APPLE Response : %s" %response.body)
-
+        receipt_data = json.loads(response.body)
+        
         if receipt_data['status'] != 0:
             self.set_status(403)
             
         else:
             self.set_status(200)
-            
+        
         self.set_header('Auth', 'abc')
         self.finish()
         
     def get(self, game_name):
+        """
+        Display Analytics for a specific game
+        """
         logging.info('Get game Name %s' %game_name)
         self.write('here')
         
