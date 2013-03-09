@@ -7,6 +7,17 @@ For More info please read
 [Apple's Docs]
 (http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/StoreKitGuide/VerifyingStoreReceipts/VerifyingStoreReceipts.html)
 
+requires
+-----------
+1. Redis-To-Go:
+
+        heroku addons:add redistogo:nano
+        
+2. NewRelic
+
+        heroku addons:add newrelic:standard
+        
+
 Setup
 -----------
 ```Shell
