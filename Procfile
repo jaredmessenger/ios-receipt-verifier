@@ -1,1 +1,1 @@
-web: python main.py --port=$PORT
+web: newrelic-admin run-program python main.py --port=$PORT
