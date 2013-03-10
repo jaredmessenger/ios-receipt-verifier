@@ -14,6 +14,7 @@ define("port", default=8000, help="Run on port 8000", type=int)
 class Application(web.Application):
     def __init__(self):
         handlers = [
+            (r'/status', request_handler.StatusCheckHandler),
             (r'/game/(.*)', request_handler.MainHandler),
             ]
         

@@ -62,5 +62,18 @@ class MainHandler(RequestHandler):
         self.write(json.dumps(redis_pool.zrange(game_name, 0, 20, desc=True, withscores=True)))
         
         
+class StatusCheckHandler(RequestHandler):
+    """
+    Request Handler for new relic to ping and check that the site is up
+    """
+    def get(self):
+        self.set_status(200)
+        self.write('online')
+        
+    def head(self):
+        self.set_status(200)
+        
+        
+        
         
 
