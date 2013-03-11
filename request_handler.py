@@ -19,6 +19,7 @@ class MainHandler(RequestHandler):
         """
         Get the json data and send it to apple to be verified
         """       
+        log.warn('Verifying receipt')
         content = json.loads(self.request.body)
         
         header  = {'Content-Type' : 'application/json'}
@@ -37,6 +38,7 @@ class MainHandler(RequestHandler):
             self.set_status(403)
             
         else:
+            log.warn('Saving Receipt %s' %game_name.lower)
             # try to add the receipt to the DB
             if redis_pool.sadd(receipt_data['bid'], receipt_data['transaction_id']) :
                 # To keep the Redis light and fast, expire the com.game
@@ -45,6 +47,8 @@ class MainHandler(RequestHandler):
                 
                 # Increment the product for statistics
                 redis_pool.zincrby(game_name.lower(), receipt_data['product_id'], 1)
+                
+                log.warn('pool saved')
                 
                 self.set_status(200)
             else:
