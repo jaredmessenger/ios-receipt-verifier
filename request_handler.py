@@ -29,7 +29,6 @@ class MainHandler(RequestHandler):
                                          body=json.dumps(content))
         
         http_client = httpclient.AsyncHTTPClient()
-        #http_client.fetch(request, self._validate_response)
         response = yield gen.Task(http_client.fetch(request))
         
         receipt_data = json.loads(response.body)
@@ -45,7 +44,7 @@ class MainHandler(RequestHandler):
                 redis_pool.expire(receipt_data['bid'], 432000)
                 
                 # Increment the product for statistics
-                redis_pool.zincrby(game_name, receipt_data['product_id'], 1)
+                redis_pool.zincrby(game_name.lower(), receipt_data['product_id'], 1)
                 
                 self.set_status(200)
             else:
@@ -59,7 +58,7 @@ class MainHandler(RequestHandler):
         """
         logging.info('Get game Name %s' %game_name)
         
-        self.write(json.dumps(redis_pool.zrange(game_name, 0, 20, desc=True, withscores=True)))
+        self.write(json.dumps(redis_pool.zrange(game_name.lower(), 0, 20, desc=True, withscores=True)))
         
         
 class StatusCheckHandler(RequestHandler):
