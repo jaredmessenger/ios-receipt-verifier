@@ -23,7 +23,7 @@ class MainHandler(RequestHandler):
         content = json.loads(self.request.body)
         
         header  = {'Content-Type' : 'application/json'}
-        # https://buy.itunes.apple.com/verifyReceipt
+        
         request = httpclient.HTTPRequest('https://sandbox.itunes.apple.com/verifyReceipt',
                                          method='POST',
                                          headers=header,
