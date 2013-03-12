@@ -40,6 +40,7 @@ class MainHandler(RequestHandler):
         else:
             log.warn('Saving Receipt %s' %game_name.lower)
             # try to add the receipt to the DB
+            log.warn(receipt_data)
             if redis_pool.sadd(receipt_data['bid'], receipt_data['transaction_id']) :
                 # To keep the Redis light and fast, expire the com.game
                 # transactions after 5 days of inactivity
