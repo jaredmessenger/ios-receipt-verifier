@@ -30,7 +30,7 @@ class MainHandler(RequestHandler):
                                          body=json.dumps(content))
         
         http_client = httpclient.AsyncHTTPClient()
-        response = yield gen.Task(http_client.fetch(request))
+        response = yield gen.Task(http_client.fetch, request)
         
         receipt_data = json.loads(response.body)
         
