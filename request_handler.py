@@ -41,13 +41,13 @@ class MainHandler(RequestHandler):
             log.warn('Saving Receipt %s' %game_name.lower)
             # try to add the receipt to the DB
             log.warn(receipt_data)
-            if redis_pool.sadd(receipt_data['bid'], receipt_data['transaction_id']) :
+            if redis_pool.sadd(receipt_data['receipt']['bid'], receipt_data['transaction_id']) :
                 # To keep the Redis light and fast, expire the com.game
                 # transactions after 5 days of inactivity
-                redis_pool.expire(receipt_data['bid'], 432000)
+                redis_pool.expire(receipt_data['receipt']['bid'], 432000)
                 
                 # Increment the product for statistics
-                redis_pool.zincrby(game_name.lower(), receipt_data['product_id'], 1)
+                redis_pool.zincrby(game_name.lower(), receipt_data['receipt']['product_id'], 1)
                 
                 log.warn('pool saved')
                 
