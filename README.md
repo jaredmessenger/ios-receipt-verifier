@@ -24,9 +24,12 @@ Setup
 virtualenv venv --distribute --no-site-packages
 source venv/bin/activate
 pip install tornado
+pip install redis
+
+git push server master
 
 heroku create --remote server my-receipt-checker-app-name
 heroku ps:scale web=1
 
-git push server master
+heroku config:add NEW_RELIC_CONFIG_FILE=newrelic.ini
 ```
